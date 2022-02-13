@@ -1,3 +1,13 @@
+type _Schema_
+  @fulltext(
+    name: "covenSearch"
+    language: en
+    algorithm: rank
+    include: [{entity: "Token", fields:
+      [{ name: "name" }, { name: "description" }, { name: "type" }, { name: "sun" }, { name: "moon" }, { name: "rising" }
+    ] }]
+  )
+
 type Token @entity {
   id: ID!
   tokenID: BigInt!
