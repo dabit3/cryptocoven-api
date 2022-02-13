@@ -4,7 +4,7 @@ Try it out [here](https://thegraph.com/hosted-service/subgraph/dabit3/cryptocove
 
 Example query:
 
-```sh
+```graphql
 {
   tokens(first: 5) {
     id
@@ -25,4 +25,33 @@ Example query:
   }
 }
 
+```
+
+Filtering
+
+```graphql
+{
+  tokens(
+    where: {
+      sun_contains: "capricorn"
+    }
+  ) {
+    sun 
+    name
+  }
+}
+```
+
+Full text search
+
+```graphql
+{
+  covenSearch(
+    text: "'CRUSH PEARLS IN YOUR FISTS'"
+  ) {
+    id
+    name
+    description
+  }
+}
 ```
