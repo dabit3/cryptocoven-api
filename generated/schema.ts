@@ -27,7 +27,6 @@ export class Token extends Entity {
     this.set("moon", Value.fromString(""));
     this.set("rising", Value.fromString(""));
     this.set("updatedAtTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("creator", Value.fromString(""));
     this.set("owner", Value.fromString(""));
   }
 
@@ -156,15 +155,6 @@ export class Token extends Entity {
     this.set("updatedAtTimestamp", Value.fromBigInt(value));
   }
 
-  get creator(): string {
-    let value = this.get("creator");
-    return value!.toString();
-  }
-
-  set creator(value: string) {
-    this.set("creator", Value.fromString(value));
-  }
-
   get owner(): string {
     let value = this.get("owner");
     return value!.toString();
@@ -214,14 +204,5 @@ export class User extends Entity {
 
   set tokens(value: Array<string>) {
     this.set("tokens", Value.fromStringArray(value));
-  }
-
-  get created(): Array<string> {
-    let value = this.get("created");
-    return value!.toStringArray();
-  }
-
-  set created(value: Array<string>) {
-    this.set("created", Value.fromStringArray(value));
   }
 }

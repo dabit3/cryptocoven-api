@@ -14,7 +14,6 @@ export function handleTransfer(event: TransferEvent): void {
   let token = Token.load(event.params.tokenId.toString());
   if (!token) {
     token = new Token(event.params.tokenId.toString());
-    token.creator = event.params.to.toHexString();
     token.tokenID = event.params.tokenId;
     token.updatedAtTimestamp = event.block.timestamp;
  
@@ -40,6 +39,11 @@ export function handleTransfer(event: TransferEvent): void {
         const coven = value.get('coven')
         if (coven) {
           let covenData = coven.toObject()
+          const type = covenData.get('type')
+          if (type) {
+            token.type = type.toString()
+          }
+
           const birthChart = covenData.get('birthChart')
           if (birthChart) {
             const birthChartData = birthChart.toObject()
