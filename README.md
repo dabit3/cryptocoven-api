@@ -1,4 +1,6 @@
-## Cryptocoven API
+## Cryptocoven subgraph
+
+![Cryptocoven subgraph](header.png)
 
 ### How to use the API
 
