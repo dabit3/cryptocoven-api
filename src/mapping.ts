@@ -34,6 +34,7 @@ export function handleTransfer(event: TransferEvent): void {
           token.image = image.toString()
           token.externalURL = externalURL.toString()
           token.description = description.toString()
+          token.ipfsURI = 'ipfs.io/ipfs/' + metadata
         }
 
         const coven = value.get('coven')

@@ -19,6 +19,7 @@ export class Token extends Entity {
     this.set("tokenID", Value.fromBigInt(BigInt.zero()));
     this.set("tokenURI", Value.fromString(""));
     this.set("externalURL", Value.fromString(""));
+    this.set("ipfsURI", Value.fromString(""));
     this.set("image", Value.fromString(""));
     this.set("name", Value.fromString(""));
     this.set("description", Value.fromString(""));
@@ -81,6 +82,15 @@ export class Token extends Entity {
 
   set externalURL(value: string) {
     this.set("externalURL", Value.fromString(value));
+  }
+
+  get ipfsURI(): string {
+    let value = this.get("ipfsURI");
+    return value!.toString();
+  }
+
+  set ipfsURI(value: string) {
+    this.set("ipfsURI", Value.fromString(value));
   }
 
   get image(): string {

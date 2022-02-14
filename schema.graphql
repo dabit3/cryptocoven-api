@@ -13,6 +13,7 @@ type Token @entity {
   tokenID: BigInt!
   tokenURI: String!
   externalURL: String!
+  ipfsURI: String!
   image: String!
   name: String!
   description: String!
