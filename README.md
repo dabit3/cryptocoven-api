@@ -1,6 +1,6 @@
 ## Cryptocoven subgraph
 
-![Cryptocoven subgraph](header.png)
+![Cryptocoven subgraph](headerimage.png)
 
 ### How to use the API
 
