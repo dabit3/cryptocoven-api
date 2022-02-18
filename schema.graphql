@@ -21,7 +21,7 @@ type Token @entity {
   sun: String!
   moon: String!
   rising: String!
-  updatedAtTimestamp: BigInt!
+  updatedAtTimestamp: BigInt
   owner: User!
 }
 

@@ -17,8 +17,7 @@ export function handleTransfer(event: TransferEvent): void {
     token.tokenID = event.params.tokenId;
     token.updatedAtTimestamp = event.block.timestamp;
  
-    let tokenContract = TokenContract.bind(event.address);
-    token.tokenURI = tokenContract.tokenURI(event.params.tokenId);
+    token.tokenURI = "/" + event.params.tokenId.toString() + ".json";
 
     let metadata = ipfs.cat(ipfshash + token.tokenURI);
     if (metadata) {

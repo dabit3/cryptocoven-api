@@ -28,7 +28,6 @@ Example query:
     }
   }
 }
-
 ```
 
 Filtering
