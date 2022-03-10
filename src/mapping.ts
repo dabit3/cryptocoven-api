@@ -15,7 +15,6 @@ export function handleTransfer(event: TransferEvent): void {
   if (!token) {
     token = new Token(event.params.tokenId.toString());
     token.tokenID = event.params.tokenId;
-    token.updatedAtTimestamp = event.block.timestamp;
  
     token.tokenURI = "/" + event.params.tokenId.toString() + ".json";
 
@@ -62,6 +61,7 @@ export function handleTransfer(event: TransferEvent): void {
     }
   }
 
+  token.updatedAtTimestamp = event.block.timestamp;
   token.owner = event.params.to.toHexString();
   token.save();
  
