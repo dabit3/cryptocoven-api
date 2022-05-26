@@ -8,7 +8,7 @@ import {
 Token, User
 } from '../generated/schema'
 
-const ipfshash = "QmSr3vdMuP2fSxWD7S26KzzBWcAN1eNhm4hk1qaR3x3vmj"
+const ipfshash = "QmaXzZhcYnsisuue5WRdQDH6FDvqkLQX1NckLqBYeYYEfm"
 
 export function handleTransfer(event: TransferEvent): void {
   let token = Token.load(event.params.tokenId.toString());
