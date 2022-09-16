@@ -3,7 +3,7 @@ type _Schema_
     name: "covenSearch"
     language: en
     algorithm: rank
-    include: [{entity: "Token", fields:
+    include: [{entity: "TokenMetadata", fields:
       [{ name: "name" }, { name: "description" }, { name: "type" }, { name: "sun" }, { name: "moon" }, { name: "rising" }
     ] }]
   )

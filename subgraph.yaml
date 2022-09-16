@@ -36,3 +36,5 @@ templates:
       abis:
         - name: Token
           file: ./abis/Token.json
+features:
+  - fullTextSearch
