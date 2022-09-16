@@ -12,7 +12,7 @@ type Token @entity {
   id: ID!
   tokenID: BigInt!
   tokenURI: String!
-  ipfsURI: TokenMetadata!
+  ipfsURI: TokenMetadata
   updatedAtTimestamp: BigInt
   owner: User!
 }
