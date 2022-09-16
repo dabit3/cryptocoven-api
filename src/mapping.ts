@@ -2,11 +2,15 @@ import {
   Transfer as TransferEvent,
   Token as TokenContract
 } from '../generated/Token/Token'
-import { ipfs, json } from '@graphprotocol/graph-ts'
+import { ipfs, json, Bytes } from '@graphprotocol/graph-ts'
 
 import {
-Token, User
+Token, User, TokenMetadata
 } from '../generated/schema'
+
+import {
+  TokenMetadata as TokenMetadataTemplate
+  } from '../generated/templates'
 
 const ipfshash = "QmaXzZhcYnsisuue5WRdQDH6FDvqkLQX1NckLqBYeYYEfm"
 
@@ -17,48 +21,9 @@ export function handleTransfer(event: TransferEvent): void {
     token.tokenID = event.params.tokenId;
  
     token.tokenURI = "/" + event.params.tokenId.toString() + ".json";
+    token.ipfsURI = ipfshash + token.tokenURI;
 
-    let metadata = ipfs.cat(ipfshash + token.tokenURI);
-    if (metadata) {
-      const value = json.fromBytes(metadata).toObject()
-      if (value) {
-        const image = value.get('image')
-        const name = value.get('name')
-        const description = value.get('description')
-        const externalURL = value.get('external_url')
-
-        if (name && image && description && externalURL) {
-          token.name = name.toString()
-          token.image = image.toString()
-          token.externalURL = externalURL.toString()
-          token.description = description.toString()
-          token.ipfsURI = 'ipfs.io/ipfs/' + ipfshash + token.tokenURI
-        }
-
-        const coven = value.get('coven')
-        if (coven) {
-          let covenData = coven.toObject()
-          const type = covenData.get('type')
-          if (type) {
-            token.type = type.toString()
-          }
-
-          const birthChart = covenData.get('birthChart')
-          if (birthChart) {
-            const birthChartData = birthChart.toObject()
-            const sun = birthChartData.get('sun')
-            const moon = birthChartData.get('moon')
-            const rising = birthChartData.get('rising')
-            if (sun && moon && rising) {
-              token.sun = sun.toString()
-              token.moon = moon.toString()
-              token.rising = rising.toString()
-            }
-          }
-        }
-          
-      }
-    }
+    TokenMetadataTemplate.create(token.ipfsURI);
   }
 
   token.updatedAtTimestamp = event.block.timestamp;
@@ -69,6 +34,47 @@ export function handleTransfer(event: TransferEvent): void {
   if (!user) {
     user = new User(event.params.to.toHexString());
     user.save();
+  }
+ }
+
+ export function handleMetadata(file: string, content: Bytes): void {
+  let tokenMetadata = new TokenMetadata(file);
+  const value = json.fromBytes(content).toObject()
+  if (value) {
+    const image = value.get('image')
+    const name = value.get('name')
+    const description = value.get('description')
+    const externalURL = value.get('external_url')
+
+    if (name && image && description && externalURL) {
+      tokenMetadata.name = name.toString()
+      tokenMetadata.image = image.toString()
+      tokenMetadata.externalURL = externalURL.toString()
+      tokenMetadata.description = description.toString()
+    }
+
+    const coven = value.get('coven')
+    if (coven) {
+      let covenData = coven.toObject()
+      const type = covenData.get('type')
+      if (type) {
+        tokenMetadata.type = type.toString()
+      }
+
+      const birthChart = covenData.get('birthChart')
+      if (birthChart) {
+        const birthChartData = birthChart.toObject()
+        const sun = birthChartData.get('sun')
+        const moon = birthChartData.get('moon')
+        const rising = birthChartData.get('rising')
+        if (sun && moon && rising) {
+          tokenMetadata.sun = sun.toString()
+          tokenMetadata.moon = moon.toString()
+          tokenMetadata.rising = rising.toString()
+        }
+      }
+    }
+  tokenMetadata.save()
   }
  }
  
