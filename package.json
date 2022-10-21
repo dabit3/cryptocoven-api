@@ -4,7 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.staging.thegraph.com/deploy/ azf20/very-cool-subgraph",
+    "deploy": "graph deploy --node https://api.staging.thegraph.com/deploy/ --ipfs https://api.staging.thegraph.com/ipfs/ azf20/very-cool-subgraph",
     "create-local": "graph create --node http://localhost:8020/ azf20/cryptocovenapi",
     "remove-local": "graph remove --node http://localhost:8020/ azf20/cryptocovenapi",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 azf20/cryptocovenapi"
