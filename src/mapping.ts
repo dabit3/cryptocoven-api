@@ -2,7 +2,7 @@ import {
   Transfer as TransferEvent,
   Token as TokenContract
 } from '../generated/Token/Token'
-import { ipfs, json, Bytes, dataSource } from '@graphprotocol/graph-ts'
+import { json, Bytes, dataSource } from '@graphprotocol/graph-ts'
 
 import {
 Token, User, TokenMetadata
@@ -40,7 +40,7 @@ export function handleTransfer(event: TransferEvent): void {
 
  export function handleMetadata(content: Bytes): void {
 
-  let tokenMetadata = new TokenMetadata(String.UTF8.decode(dataSource.address().buffer));
+  let tokenMetadata = new TokenMetadata(dataSource.stringParam());
   const value = json.fromBytes(content).toObject()
   if (value) {
     const image = value.get('image')
