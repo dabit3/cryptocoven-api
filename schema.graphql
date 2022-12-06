@@ -3,7 +3,7 @@ type _Schema_
     name: "covenSearch"
     language: en
     algorithm: rank
-    include: [{entity: "Token", fields:
+    include: [{entity: "TokenMetadata", fields:
       [{ name: "name" }, { name: "description" }, { name: "type" }, { name: "sun" }, { name: "moon" }, { name: "rising" }
     ] }]
   )
@@ -12,17 +12,21 @@ type Token @entity {
   id: ID!
   tokenID: BigInt!
   tokenURI: String!
-  externalURL: String!
-  ipfsURI: String!
+  ipfsURI: TokenMetadata
+  updatedAtTimestamp: BigInt
+  owner: User!
+}
+
+type TokenMetadata @entity {
+  id: ID!
   image: String!
+  externalURL: String!
   name: String!
   description: String!
   type: String!
   sun: String!
   moon: String!
   rising: String!
-  updatedAtTimestamp: BigInt
-  owner: User!
 }
 
 type User @entity {

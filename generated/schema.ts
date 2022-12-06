@@ -15,20 +15,6 @@ export class Token extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("tokenID", Value.fromBigInt(BigInt.zero()));
-    this.set("tokenURI", Value.fromString(""));
-    this.set("externalURL", Value.fromString(""));
-    this.set("ipfsURI", Value.fromString(""));
-    this.set("image", Value.fromString(""));
-    this.set("name", Value.fromString(""));
-    this.set("description", Value.fromString(""));
-    this.set("type", Value.fromString(""));
-    this.set("sun", Value.fromString(""));
-    this.set("moon", Value.fromString(""));
-    this.set("rising", Value.fromString(""));
-    this.set("updatedAtTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("owner", Value.fromString(""));
   }
 
   save(): void {
@@ -37,8 +23,7 @@ export class Token extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save Token entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
+        `Entities of type Token must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
       store.set("Token", id.toString(), this);
     }
@@ -75,22 +60,79 @@ export class Token extends Entity {
     this.set("tokenURI", Value.fromString(value));
   }
 
-  get externalURL(): string {
-    let value = this.get("externalURL");
-    return value!.toString();
-  }
-
-  set externalURL(value: string) {
-    this.set("externalURL", Value.fromString(value));
-  }
-
-  get ipfsURI(): string {
+  get ipfsURI(): string | null {
     let value = this.get("ipfsURI");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set ipfsURI(value: string | null) {
+    if (!value) {
+      this.unset("ipfsURI");
+    } else {
+      this.set("ipfsURI", Value.fromString(<string>value));
+    }
+  }
+
+  get updatedAtTimestamp(): BigInt | null {
+    let value = this.get("updatedAtTimestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set updatedAtTimestamp(value: BigInt | null) {
+    if (!value) {
+      this.unset("updatedAtTimestamp");
+    } else {
+      this.set("updatedAtTimestamp", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get owner(): string {
+    let value = this.get("owner");
     return value!.toString();
   }
 
-  set ipfsURI(value: string) {
-    this.set("ipfsURI", Value.fromString(value));
+  set owner(value: string) {
+    this.set("owner", Value.fromString(value));
+  }
+}
+
+export class TokenMetadata extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save TokenMetadata entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type TokenMetadata must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("TokenMetadata", id.toString(), this);
+    }
+  }
+
+  static load(id: string): TokenMetadata | null {
+    return changetype<TokenMetadata | null>(store.get("TokenMetadata", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get image(): string {
@@ -100,6 +142,15 @@ export class Token extends Entity {
 
   set image(value: string) {
     this.set("image", Value.fromString(value));
+  }
+
+  get externalURL(): string {
+    let value = this.get("externalURL");
+    return value!.toString();
+  }
+
+  set externalURL(value: string) {
+    this.set("externalURL", Value.fromString(value));
   }
 
   get name(): string {
@@ -155,24 +206,6 @@ export class Token extends Entity {
   set rising(value: string) {
     this.set("rising", Value.fromString(value));
   }
-
-  get updatedAtTimestamp(): BigInt {
-    let value = this.get("updatedAtTimestamp");
-    return value!.toBigInt();
-  }
-
-  set updatedAtTimestamp(value: BigInt) {
-    this.set("updatedAtTimestamp", Value.fromBigInt(value));
-  }
-
-  get owner(): string {
-    let value = this.get("owner");
-    return value!.toString();
-  }
-
-  set owner(value: string) {
-    this.set("owner", Value.fromString(value));
-  }
 }
 
 export class User extends Entity {
@@ -187,8 +220,7 @@ export class User extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save User entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
+        `Entities of type User must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
       store.set("User", id.toString(), this);
     }
